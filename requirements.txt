@@ -1,0 +1,2 @@
+-e git+https://github.com/Arihan10/Treehacks-Winners.git@53bba00c87854bf774961a17c534bd16ae97c90d#egg=mobius&subdirectory=mobius
+setuptools==75.8.0
