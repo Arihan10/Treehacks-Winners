@@ -82,7 +82,6 @@ class Mobius:
     def do(self, action: str):
         print("action: " + action)
 
-
 """
 # Example usage
 mobile = Mobius().init()  # Uses default "Emulator"
