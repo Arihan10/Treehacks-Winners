@@ -9,15 +9,13 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 
-# Setup logging
 LOG_FILE = "agent.log"
 
 def clear_log():
-    """Deletes the log file to ensure a fresh log for every run."""
     if os.path.exists(LOG_FILE):
         os.remove(LOG_FILE)
 
-clear_log()  # Clear the log at the start of every run
+clear_log()
 
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger()
@@ -25,6 +23,7 @@ logger = logging.getLogger()
 load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
 os.environ["OPENAI_API_BASE"] = os.getenv('OPENAI_API_BASE')
+
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 
@@ -46,14 +45,7 @@ chat_chain = LLMChain(
     memory=memory
 )
 
-def set_system_prompt(system_message):
-    """Initialize conversation memory with a system message."""
-    memory.clear()
-    memory.save_context({"input": "System"}, {"output": system_message})
-    logger.info(f"System prompt set: {system_message}")
-
 def run_adb_command(cmd):
-    """Run an ADB command and log both stdout and stderr."""
     logger.info(f"Executing ADB command: {cmd}")
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
     
@@ -67,26 +59,54 @@ def run_adb_command(cmd):
 
     return output
 
+# def prompt_chatgpt(query, xml_file=None):
+#     if xml_file:
+#         with open(xml_file, 'r') as f:
+#             xml_content = f.read()
+#         query += f"\nHere is the UI XML:\n{xml_content}"
+
+#     logger.info(f"Prompting GPT-4o Mini: {query}")
+#     response = chat_chain.run(query=query)
+#     logger.info(f"GPT-4o Mini Response: {response}")
+#     return response.strip()
+
 def prompt_chatgpt(query, xml_file=None):
+    xml_content = ""
     if xml_file:
         with open(xml_file, 'r') as f:
             xml_content = f.read()
-        query += f"\nHere is the UI XML:\n{xml_content}"
+        query_with_xml = f"{query}\nHere is the UI XML:\n{xml_content}"
+    else:
+        query_with_xml = query
 
-    logger.info(f"Prompting GPT-4o Mini: {query}")
-    response = chat_chain.run(query=query)
-    logger.info(f"GPT-4o Mini Response: {response}")
+    logger.info(f"Prompting GPT-4o: {query_with_xml}")
+    response = chat_chain.llm.predict(prompt.format(chat_history=memory.load_memory_variables({})["chat_history"], query=query_with_xml))
+
+    # Store memory WITHOUT XML
+    memory.save_context({"input": query}, {"output": response})
+
+    logger.info(f"GPT-4o Response: {response}")
     return response.strip()
 
 def list_packages():
-    return run_adb_command("adb shell pm list packages")
+    output = run_adb_command("adb shell pm list packages")
+    return output.split('\n')
 
-def get_relevant_package(task):
-    query = f'I would like to do "{task}". What is the most relevant package to this? Tell me ONLY the package name. Take packages ONLY FROM THIS LIST. Probably de.ritscher.simplemobiletools.contacts.pro'
+def get_relevant_package(task, package_list):
+    package_text = "\n".join(package_list)
+    query = f'I would like to do "{task}". What is the most relevant package to this? Tell me ONLY the package name. Take packages ONLY FROM THIS LIST:\n{package_text}'
     return prompt_chatgpt(query)
 
-def run_relevant_package(package_name):
-    run_adb_command(f"adb shell am start -n {package_name}/com.simplemobiletools.contacts.pro.activities.MainActivity")
+def get_main_activity(package_name):
+    # ON MAC
+    # output = run_adb_command(f"adb shell dumpsys package {package_name} | grep -A 1 \"Main\"")
+    # ON WINDOWS
+    output = run_adb_command(f"adb shell dumpsys package {package_name} | findstr /C:\"Main\"")
+    query = f"Please extract the {package_name}/<activity> for the app's main activity view intent, only from this output of dumpsys: \n{output}\n. Please tell me in form {package_name}/<activity> and say nothing else.\n{output}"
+    return prompt_chatgpt(query)
+
+def run_relevant_package(main_activity):
+    run_adb_command(f"adb shell am start -n {main_activity}")
     time.sleep(2)
 
 def dump_ui(temp_dir):
@@ -120,10 +140,20 @@ def get_adb_commands(xml_path):
 
 def run_agent(task):
     logger.info(f"Starting agent for task: {task}")
+    
+    system_prompt = (
+        "You are an AI assistant controlling an Android device via ADB. "
+        "If asked to give ADB commands, ONLY give adb commands and nothing else. "
+        "If asked otherwise, ONLY use material given to you and no outside knowledge. Use proper grammar."
+    )
+    memory.clear()
+    memory.save_context({"input": "System"}, {"output": system_prompt})
+    logger.info(f"System prompt set: {system_prompt}")
 
-    list_packages()
-    package_name = get_relevant_package(task)
-    run_relevant_package(package_name)
+    package_list = list_packages()
+    package_name = get_relevant_package(task, package_list)
+    main_activity = get_main_activity(package_name)
+    run_relevant_package(main_activity)
 
     temp_dir = tempfile.mkdtemp()
 
@@ -142,8 +172,5 @@ def run_agent(task):
             time.sleep(0.1)
 
 if __name__ == "__main__":
-    system_prompt = "You are an AI assistant controlling an Android device via ADB. If asked to give ADB commands, ONLY give adb commands and nothing else. if asked otherwise, ONLY use material given to you and no outside knowledge. Use proper grammar."
-    set_system_prompt(system_prompt)
-    
     task_description = "Add a new contact with first name of Donald and surname of Duck with the number 1234567"
     run_agent(task_description)
