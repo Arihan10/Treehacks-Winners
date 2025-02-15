@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from mobius import Mobile
+from mobius import Mobius
 
 app = FastAPI()
 
-mobile = Mobile()
+mobile = Mobius().create()
+
 
 @app.get("/")
 async def root():

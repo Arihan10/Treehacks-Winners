@@ -1,2 +1,24 @@
--e git+https://github.com/Arihan10/Treehacks-Winners.git@53bba00c87854bf774961a17c534bd16ae97c90d#egg=mobius&subdirectory=mobius
+annotated-types==0.7.0
+anyio==4.8.0
+Appium-Python-Client==4.5.0
+attrs==25.1.0
+certifi==2025.1.31
+fastapi==0.115.8
+h11==0.14.0
+idna==3.10
+-e git+https://github.com/Arihan10/Treehacks-Winners.git@78c968325fc47a4e4295a01b75d7380a275147ba#egg=mobius&subdirectory=mobius
+outcome==1.3.0.post0
+pydantic==2.10.6
+pydantic_core==2.27.2
+PySocks==1.7.1
+selenium==4.28.1
 setuptools==75.8.0
+sniffio==1.3.1
+sortedcontainers==2.4.0
+starlette==0.45.3
+trio==0.29.0
+trio-websocket==0.11.1
+typing_extensions==4.12.2
+urllib3==2.3.0
+websocket-client==1.8.0
+wsproto==1.2.0
