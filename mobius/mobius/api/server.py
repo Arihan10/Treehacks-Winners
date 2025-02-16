@@ -19,13 +19,11 @@ def start_server():
     print("Starting FastAPI server on http://127.0.0.1:8000")
     run_server()
 """
-
-def run_server(port):
+port = 8000
+def run_server(port=8000):
     uvicorn.run("mobius.api.server:app", host="127.0.0.1", port=port)
 
 def start_server():
-    port = 8000
-    run_server(port)
     server_thread = threading.Thread(target=run_server, daemon=True)
     server_thread.start()
 

@@ -4,6 +4,7 @@ import requests
 import websockets
 import json
 import subprocess
+import asyncio
 
 def create_controller():
     return ServerWrapper()
@@ -23,10 +24,13 @@ class ServerWrapper:
         async def websocket_client():
             async with websockets.connect(f'ws://{self.url[7:]}/do') as websocket:
                 await websocket.send(json.dumps(data))  # Convert dictionary to JSON
-                response = await websocket.recv()  # Receive response from server
-                print(f"Server response: {response}")
+                try:
+                    response = await websocket.recv()
+                    print(f"Server response: {response}")
+                except websockets.exceptions.ConnectionClosedOK:
+                    print("✅ WebSocket closed cleanly.")
         print("WEBSOCKET")
-        websocket_client()
+        asyncio.run(websocket_client())
 
     def close_all_emulators(self):
         result = subprocess.run(["adb", "devices"], capture_output=True, text=True)
