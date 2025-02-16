@@ -1,0 +1,5 @@
+2025-02-15 22:54:37,317 - INFO - WebSocket connection accepted
+2025-02-15 22:54:37,321 - INFO - Received data: {'type': 'local', 'identifier': 'emulator-5554', 'natural_language_task': 'Check my messages for any new messages from Brian', 'human_in_loop': 'No'}
+2025-02-15 22:54:37,321 - INFO - HALHKFHSJDHSLKJFLSKJFD
+2025-02-15 22:54:39,522 - INFO - {'output': 'Physical size: 1080x2400', 'succeeded': True}
+2025-02-15 22:54:39,522 - INFO - /do: execution finished
