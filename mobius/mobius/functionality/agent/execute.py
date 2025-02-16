@@ -350,10 +350,13 @@ Action to execute:
         SystemMessage(content=system_prompt),
         HumanMessage(content=user_message)
     ]
+
+    print("generating commands")
     
     response = llm.invoke(messages)
     
     commands = response.content.strip().split('\n')
+    print(commands)
     
     # Store both the commands and the action they're trying to achieve
     state['current_commands'] = commands
