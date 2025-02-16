@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mobius"
+version = "0.1.0"
+description = ""
+authors = ["Minh Trinh <tminh.us@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.8"
+langchain = "^0.3.18"
+uvicorn = "^0.34.0"
+websockets = "^14.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
