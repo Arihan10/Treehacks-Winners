@@ -1,5 +1,0 @@
-setup.py
-mobius.egg-info/PKG-INFO
-mobius.egg-info/SOURCES.txt
-mobius.egg-info/dependency_links.txt
-mobius.egg-info/top_level.txt
