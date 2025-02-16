@@ -22,14 +22,30 @@ class ServerWrapper:
         }
 
         async def websocket_client():
-            async with websockets.connect(f'ws://{self.url[7:]}/do') as websocket:
-                await websocket.send(json.dumps(data))  # Convert dictionary to JSON
-                try:
-                    response = await websocket.recv()
-                    print(f"Server response: {response}")
-                except websockets.exceptions.ConnectionClosedOK:
-                    print("✅ WebSocket closed cleanly.")
-        print("WEBSOCKET")
+            # Increase timeout and keepalive interval
+            timeout = 600  # 10 minutes (600 seconds)
+            keepalive_interval = 300  # Send a ping every 5 minutes to keep the connection alive
+
+            try:
+                async with websockets.connect(
+                    f'ws://{self.url[7:]}/do', 
+                    ping_interval=keepalive_interval,  # Adjust ping interval
+                    ping_timeout=timeout  # Increase ping timeout
+                ) as websocket:
+                    await websocket.send(json.dumps(data))  # Convert dictionary to JSON
+                    
+                    try:
+                        response = await websocket.recv()
+                        print(f"Server response: {response}")
+                    except websockets.exceptions.ConnectionClosedOK:
+                        print("✅ WebSocket closed cleanly.")
+                    except websockets.exceptions.ConnectionClosedError as e:
+                        print(f"⚠️ WebSocket connection closed with error: {e}")
+            
+            except websockets.exceptions.WebSocketException as e:
+                print(f"WebSocket connection failed: {e}")
+
+        # Run the WebSocket client
         asyncio.run(websocket_client())
 
     def close_all_emulators(self):

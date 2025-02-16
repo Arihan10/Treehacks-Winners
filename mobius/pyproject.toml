@@ -11,6 +11,9 @@ fastapi = "^0.115.8"
 langchain = "^0.3.18"
 uvicorn = "^0.34.0"
 websockets = "^14.2"
+langgraph = "^0.2.73"
+python-dotenv = "^1.0.1"
+langchain-openai = "^0.3.6"
 
 
 [build-system]

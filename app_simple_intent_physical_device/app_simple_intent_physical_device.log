@@ -1,0 +1,54 @@
+2025-02-16 02:51:03,713 - INFO - WebSocket connection accepted
+2025-02-16 02:51:03,714 - INFO - None
+2025-02-16 02:51:03,716 - INFO - Received data: {'type': 'local', 'identifier': 'ZN3223VTP6', 'natural_language_task': "Add my friend's contact to my contacts list", 'human_in_loop': 'No'}
+2025-02-16 02:51:03,716 - INFO - Starting agent for task: <mobius.models.activetask.ActiveTask object at 0x000002462E516B00>
+2025-02-16 02:51:03,732 - INFO - adb shell pm list packages
+2025-02-16 02:51:05,901 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:51:08,563 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:51:14,182 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:51:14,191 - INFO - adb shell monkey -p com.motorola.android.contacts.overlay.vzw -c android.intent.category.LAUNCHER 1
+2025-02-16 02:51:16,561 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:51:19,209 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:51:29,569 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:51:29,577 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:51:33,930 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:51:36,027 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:51:38,691 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:51:45,957 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:51:45,961 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:51:50,214 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:51:52,320 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:51:54,966 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:52:01,805 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:52:01,808 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:52:06,095 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:52:08,180 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:52:10,813 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:52:21,386 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:52:21,388 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:52:25,653 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:52:27,737 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:52:30,396 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:52:36,382 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:52:36,384 - INFO - adb shell input tap 100 150
+2025-02-16 02:52:38,567 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:52:42,751 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:52:44,853 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:52:47,188 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:52:54,522 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:52:54,524 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:52:58,694 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:53:00,790 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:53:03,145 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:53:08,075 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:53:08,077 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:53:12,303 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:53:14,395 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:53:16,742 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:53:22,301 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:53:22,303 - INFO - adb shell uiautomator dump /sdcard/ui.xml
+2025-02-16 02:53:26,501 - INFO - adb pull /sdcard/ui.xml C:\Users\tminh\AppData\Local\Temp\ui.xml
+2025-02-16 02:53:28,579 - INFO - adb shell screencap -p /sdcard/screenshot.png
+2025-02-16 02:53:30,957 - INFO - adb pull /sdcard/screenshot.png C:\Users\tminh\AppData\Local\Temp\screenshot.png
+2025-02-16 02:53:35,924 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-16 02:53:35,927 - ERROR - Error processing request: 'str' object has no attribute 'get'

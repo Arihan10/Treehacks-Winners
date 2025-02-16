@@ -18,22 +18,24 @@ class ADBHandler:
 
     def get_xml(self):
         """
-        Dumps the current UI hierarchy to an XML file and retrieves its contents.
+        Dumps the current UI hierarchy to an XML file, pulls it to a temporary file on the host machine,
+        and returns the local file path.
         """
+        temp_dir = tempfile.gettempdir()
+        local_xml_path = os.path.join(temp_dir, "ui.xml")
+        device_xml_path = "/sdcard/ui.xml"
+
+        # Step 1: Dump UI hierarchy on the device
         dump_res = self.call("adb shell uiautomator dump /sdcard/ui.xml")
         if not dump_res["succeeded"]:
-            return dump_res
-        
-        pull_res = self.call("adb pull /sdcard/ui.xml ui.xml")
+            return {"output": "Failed to dump UI hierarchy", "succeeded": False}
+
+        # Step 2: Pull UI XML file from device to host
+        pull_res = self.call(f"adb pull {device_xml_path} {local_xml_path}")
         if not pull_res["succeeded"]:
-            return pull_res
-        
-        try:
-            with open("ui.xml", "r", encoding="utf-8") as f:
-                xml_content = f.read()
-            return {"output": xml_content, "succeeded": True}
-        except Exception as e:
-            return {"output": str(e), "succeeded": False}
+            return {"output": "Failed to pull UI XML file", "succeeded": False}
+
+        return local_xml_path
 
     def get_screenshot(self):
         """
@@ -54,4 +56,4 @@ class ADBHandler:
         if not pull_res["succeeded"]:
             return {"output": "Failed to pull screenshot", "succeeded": False}
 
-        return {"output": local_screenshot_path, "succeeded": True}
+        return local_screenshot_path

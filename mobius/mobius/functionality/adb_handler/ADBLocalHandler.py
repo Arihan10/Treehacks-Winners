@@ -2,6 +2,9 @@ from mobius.functionality.adb_handler.ADBHandler import ADBHandler
 import subprocess
 import time
 
+import logging
+logger = logging.getLogger()
+
 class ADBLocalHandler(ADBHandler):
     """
     Handles ADB operations over a local (USB) connection.
@@ -11,6 +14,7 @@ class ADBLocalHandler(ADBHandler):
         self.device_id = device_id
 
     def call(self, command: str):
+        logger.info(command)
         """
         Runs an ADB command using the specified USB-connected device.
         
@@ -18,7 +22,6 @@ class ADBLocalHandler(ADBHandler):
         inserts '-s <device_id>' if a device ID is provided, and executes it.
         """
         parts = command.strip().split()
-        
         if not parts or parts[0].lower() != "adb":
             return {"output": "Invalid command format. Must start with 'adb'.", "succeeded": False}
         

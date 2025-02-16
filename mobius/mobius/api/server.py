@@ -23,7 +23,7 @@ port = 8000
 def run_server():
     uvicorn.run("mobius.api.server:app", host="127.0.0.1", port=port)
 
-def start_server(full_attach_ip: str):
+def start_server(full_attach_ip: str = None):
     from mobius.api import server_state
     server_state['full_attach_ip'] = full_attach_ip
 

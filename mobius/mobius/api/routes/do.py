@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from mobius.models import ActiveTask, DoRequest
 from typing import Dict
 from mobius.functionality.adb_handler import ADBWifiHandler, ADBLocalHandler
-from mobius.functionality.dummy_agent import execute
+from mobius.functionality.agent import execute
 import json
 
 
@@ -38,8 +38,11 @@ async def websocket_listener(websocket: WebSocket):
             await websocket.send_text(json.dumps({"error": "Invalid request format"}))
             return
 
+
         identifier = request.get("identifier", None)
-        if identifier is None and server_state['full_attach_ip']:
+        if identifier is not None:
+            pass
+        elif identifier is None and server_state['full_attach_ip']:
             identifier = server_state['full_attach_ip']
         else:
             print("this wasn't meant to happen lol")
