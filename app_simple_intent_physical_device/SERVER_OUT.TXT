@@ -1,0 +1,106 @@
+TEST TEST TEST SERVER OUT
+INFO:     Started server process [54316]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     ('127.0.0.1', 61618) - "WebSocket /do" [accepted]
+INFO:     connection open
+TEST TEST TEST SERVER OUT
+INFO:     Started server process [23208]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     ('127.0.0.1', 61632) - "WebSocket /do" [accepted]
+INFO:     connection open
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\uvicorn\protocols\websockets\websockets_impl.py", line 331, in asgi_send
+    await self.send(data)  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\websockets\legacy\protocol.py", line 620, in send
+    await self.ensure_open()
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\websockets\legacy\protocol.py", line 930, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1000 (OK); then sent 1000 (OK)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\websockets.py", line 85, in send
+    await self._send(message)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\_exception_handler.py", line 39, in sender
+    await send(message)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\uvicorn\protocols\websockets\websockets_impl.py", line 344, in asgi_send
+    raise ClientDisconnected from exc
+uvicorn.protocols.utils.ClientDisconnected
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\uvicorn\protocols\websockets\websockets_impl.py", line 243, in run_asgi
+    result = await self.app(self.scope, self.asgi_receive, self.asgi_send)  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\middleware\errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\routing.py", line 362, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\routing.py", line 95, in app
+    await wrap_app_handling_exceptions(app, session)(scope, receive, send)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\routing.py", line 93, in app
+    await func(session)
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\fastapi\routing.py", line 383, in app
+    await dependant.call(**solved_result.values)
+  File "C:\Users\Ariha\Downloads\New-Clone-Mobius\Treehacks-Winners\mobius\mobius\api\routes\do.py", line 83, in websocket_listener
+    await websocket.send_text(json.dumps({"error": str(e)}))
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\websockets.py", line 165, in send_text
+    await self.send({"type": "websocket.send", "text": data})
+  File "C:\Users\Ariha\AppData\Local\pypoetry\Cache\virtualenvs\mobius-eZPhWNaK-py3.11\Lib\site-packages\starlette\websockets.py", line 88, in send
+    raise WebSocketDisconnect(code=1006)
+starlette.websockets.WebSocketDisconnect
+TEST TEST TEST SERVER OUT
+INFO:     Started server process [43928]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     ('127.0.0.1', 61642) - "WebSocket /do" [accepted]
+INFO:     connection open
+INFO:     connection closed
+TEST TEST TEST SERVER OUT
+INFO:     Started server process [48616]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     ('127.0.0.1', 61690) - "WebSocket /do" [accepted]
+INFO:     connection open
+Server response: {"error": "Graph.add_node() got an unexpected keyword argument 'output_type'"}
+INFO:     connection closed
+TEST TEST TEST SERVER OUT
+INFO:     Started server process [42896]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     ('127.0.0.1', 61701) - "WebSocket /do" [accepted]
+INFO:     connection open
+Server response: {"error": "Graph.add_node() got an unexpected keyword argument 'output_type'"}
+INFO:     connection closed

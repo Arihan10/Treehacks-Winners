@@ -149,7 +149,7 @@ Focus on user interface interactions and navigation."""
 
 A screenshot of the current screen state is attached to this message.
 
-Please provide a sequence of steps to complete this task. At the end, provide a detailed overview of the given screenshot."""},
+Please provide a sequence of steps to complete this task."""},
         {
             "type": "image_url",
             "image_url": {"url": f"data:image/png;base64,{encoded_image}"},
@@ -368,8 +368,8 @@ Action to execute:
         state['task'].handler.call(cmd.strip())
     
     # Update state with new screen info
-    state['current_xml'] = state['task'].handler.get_xml() # "xmlExample3.txt"  # This would normally be from a new dump
-    state['current_image'] = state['task'].handler.get_screenshot() # "images/img4.png"  # This would normally be a new screenshot
+    state['current_xml'] = state['task'].handler.get_xml()
+    state['current_image'] = state['task'].handler.get_screenshot()
     
     return state
 
@@ -456,11 +456,10 @@ def create_graph() -> MessageGraph:
     workflow.add_node("verification", verification_stage)
     
     # Define conditional routing
-    def router(state: Dict) -> str:
+    def router(state: Dict) -> Dict:
         result = state.get('verification_result')
-        if result == "FINISH":
-            return "end"
-        return "command_generation"
+        state['next_node'] = "end" if result == "FINISH" else "command_generation"
+        return state
 
     # Connect nodes in sequence
     workflow.add_edge("init", "planning")
