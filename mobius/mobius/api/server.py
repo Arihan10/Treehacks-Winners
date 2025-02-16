@@ -20,10 +20,13 @@ def start_server():
     run_server()
 """
 port = 8000
-def run_server(port=8000):
+def run_server():
     uvicorn.run("mobius.api.server:app", host="127.0.0.1", port=port)
 
-def start_server():
+def start_server(full_attach_ip: str):
+    from mobius.api import server_state
+    server_state['full_attach_ip'] = full_attach_ip
+
     server_thread = threading.Thread(target=run_server, daemon=True)
     server_thread.start()
 

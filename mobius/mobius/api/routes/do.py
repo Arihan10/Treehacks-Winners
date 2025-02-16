@@ -5,6 +5,7 @@ from mobius.functionality.adb_handler import ADBWifiHandler, ADBLocalHandler
 from mobius.functionality.dummy_agent import execute
 import json
 
+
 router = APIRouter()
 
 active_tasks: Dict[str, ActiveTask] = {}
@@ -12,15 +13,17 @@ active_tasks: Dict[str, ActiveTask] = {}
 import logging
 
 logging.basicConfig(
-    filename="what.log",   # Log file name
+    filename="do.log",   # Log file name
     level=logging.INFO,    # Log level (INFO, DEBUG, WARNING, ERROR, CRITICAL)
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
 @router.websocket("/do")
 async def websocket_listener(websocket: WebSocket):
+    from mobius.api import server_state
     await websocket.accept()
     logging.info("WebSocket connection accepted")
+    logging.info(server_state['full_attach_ip'])
 
     try:
         # Receive JSON-ified request from the WebSocket client
@@ -30,12 +33,18 @@ async def websocket_listener(websocket: WebSocket):
         request = json.loads(data)  # Convert JSON string to dict
         logging.info(f"Received data: {request}")
         # Validate required fields
-        required_keys = {"identifier", "type", "natural_language_task"}
+        required_keys = {"type", "natural_language_task"}
         if not all(k in request for k in required_keys):
             await websocket.send_text(json.dumps({"error": "Invalid request format"}))
             return
 
-        identifier = request["identifier"]
+        identifier = request.get("identifier", None)
+        if identifier is None and server_state['full_attach_ip']:
+            identifier = server_state['full_attach_ip']
+        else:
+            print("this wasn't meant to happen lol")
+            return
+
         # Check if a task is already running on this device
         if identifier in active_tasks:
             await websocket.send_text(json.dumps({"error": "Can't start simultaneous actions on the same device."}))

@@ -76,5 +76,27 @@ def attempt_pair(retries=3):
     print("All attempts to pair failed.")
     return None  # Return None if all retries fail
 
+import os
+import logging
+
+LOG_FILE = "voicify.log"
+
+def clear_log():
+    if os.path.exists(LOG_FILE):
+        os.remove(LOG_FILE)
+
+clear_log()
+
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger()
+
 ip = attempt_pair()
 print(ip)
+
+if ip is None: exit()
+
+from mobius import start_server
+url = start_server(full_attach_ip = ip)
+
+while True:
+    pass
