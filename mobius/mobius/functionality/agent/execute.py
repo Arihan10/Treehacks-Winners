@@ -139,7 +139,10 @@ def planning_stage(state: Dict) -> Dict:
     system_prompt = """You are an AI assistant controlling an Android device. 
 
 Generate a set of high-level steps to achieve the user's task, similar to how a human would operate the phone.
-Focus on user interface interactions and navigation."""
+
+Focus on user interface interactions and navigation.
+
+DO NOT make assumptions about selecting or interacting with content that is unspecified. For instance, if the user has requested to message 'a friend' but not specified their name, note somewhere that the name is unspecified, or if a user has tasked 'order food' but not specified what food, DO NOT assume the food - write that is must be asked."""
 
     encoded_image = encode_image(state['task'].handler.get_screenshot())
 
@@ -169,6 +172,7 @@ Please provide a sequence of steps to complete this task."""},
 def pre_action_stage(state: Dict) -> Dict:
     """Generate initial action before questions."""
     system_prompt = """You are an AI assistant controlling an Android device. You will be provided with:
+
 1. A task the user wants to execute.
 2. A set of very high-level instructions generated within a previous context about how to perform the task. These instructions are merely guides and do not have to be applied strictly.
 3. A screenshot of the current phone state - autonomously assess what stage the task is currently at.
@@ -214,7 +218,7 @@ def questions_stage(state: Dict) -> Dict:
 4. A comprehensive XML representation of the current screen view - keep in mind that objects outside of screen view are not included within this.
 5. The next action you intend to take based on current information.
 
-You will repeatedly assess whether you are missing any information to concretely execute the command, and thus need to ask the user a question for further clarification. If such a question is necessary, output the question as a string - DO NOT output anything except the question itself, including NO formatting. If there is NO question to be asked, output the word "NONE" (WITHOUT the quotation marks)."""
+You will repeatedly assess whether you are missing any information to concretely execute the command, and thus need to ask the user a question for further clarification. For example, if you are messaging someone but the identity is unspecified, or if you are ordering a pizza and the type/topping are unspecified, etc. then in those cases you SHOULD ask a question. If such a question is necessary, output the question as a string - DO NOT output anything except the question itself, including NO formatting. If there is NO question to be asked, output the word "NONE" (WITHOUT the quotation marks)."""
 
     xml_data = read_xml(state['task'].handler.get_xml())
     encoded_image = encode_image(state['task'].handler.get_screenshot())
