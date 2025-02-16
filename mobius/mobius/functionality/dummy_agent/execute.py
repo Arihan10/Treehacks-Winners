@@ -16,9 +16,6 @@ logger = logging.getLogger()
 async def execute(task: ActiveTask):
     logging.info("HALHKFHSJDHSLKJFLSKJFD")
     logging.info(task.handler.call("adb shell wm size"))
-    task.send_message
-    .handler.ui_dump
-
 
     return True
     
