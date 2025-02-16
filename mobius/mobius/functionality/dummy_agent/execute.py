@@ -1,14 +1,21 @@
 from mobius.models import ActiveTask
-
+import os
 import logging
 
-logging.basicConfig(
-    filename="execution.log",   # Log file name
-    level=logging.INFO,    # Log level (INFO, DEBUG, WARNING, ERROR, CRITICAL)
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+LOG_FILE = "execution.log"
 
-def execute(task: ActiveTask):
+def clear_log():
+    if os.path.exists(LOG_FILE):
+        os.remove(LOG_FILE)
+
+clear_log()
+
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger()
+
+async def execute(task: ActiveTask):
     logging.info("HALHKFHSJDHSLKJFLSKJFD")
-    logging.info(task.handler.call("adb shell get wm size"))
+    logging.info(task.handler.call("adb shell wm size"))
+
+    return True
     

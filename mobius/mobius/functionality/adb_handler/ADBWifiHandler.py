@@ -3,7 +3,7 @@ import subprocess
 import time
 
 class ADBWifiHandler(ADBHandler):
-    def __init__(self):
+    def __init__(self, ip):
         self.ip = None
 
     def call(self, command: str):
@@ -19,7 +19,7 @@ class ADBWifiHandler(ADBHandler):
             return {"output": "Invalid command format. Must start with 'adb'.", "succeeded": False}
         
         cmd = ["adb", "-s", f"{self.ip}:5555"] + parts[1:] 
-        
+
         result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
         success = result.returncode == 0
         time.sleep(2)

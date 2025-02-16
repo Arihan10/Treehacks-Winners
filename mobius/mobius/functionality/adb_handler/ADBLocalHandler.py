@@ -7,7 +7,7 @@ class ADBLocalHandler(ADBHandler):
     Handles ADB operations over a local (USB) connection.
     This handler uses a device_id to run ADB commands.
     """
-    def __init__(self, device_id=None):
+    def __init__(self, device_id):
         self.device_id = device_id
 
     def call(self, command: str):
@@ -23,7 +23,6 @@ class ADBLocalHandler(ADBHandler):
             return {"output": "Invalid command format. Must start with 'adb'.", "succeeded": False}
         
         cmd = ["adb", "-s", self.device_id] + parts[1:]
-        
         result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
         success = result.returncode == 0
         time.sleep(2)

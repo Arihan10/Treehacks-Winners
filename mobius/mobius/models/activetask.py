@@ -5,7 +5,7 @@ class ActiveTask:
         self.handler = handler
         self.websocket = websocket
         self.natural_language_task = natural_language_task
-        self.human_in_loop = human_in_loop
+        self.human_in_loop = False if human_in_loop == "No" else True
     
     async def send_message(self, message: str):
         await self.websocket.send_text(message)

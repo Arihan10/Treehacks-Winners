@@ -17,7 +17,7 @@ class ServerWrapper:
             "type": "local",
             "identifier": device_id,
             "natural_language_task": task,
-            "human_in_loop": False
+            "human_in_loop": "No"
         }
 
         async def websocket_client():
@@ -25,6 +25,8 @@ class ServerWrapper:
                 await websocket.send(json.dumps(data))  # Convert dictionary to JSON
                 response = await websocket.recv()  # Receive response from server
                 print(f"Server response: {response}")
+        print("WEBSOCKET")
+        websocket_client()
 
     def close_all_emulators(self):
         result = subprocess.run(["adb", "devices"], capture_output=True, text=True)
