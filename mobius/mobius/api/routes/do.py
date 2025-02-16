@@ -25,7 +25,6 @@ async def websocket_listener(websocket: WebSocket):
     try:
         # Receive JSON-ified request from the WebSocket client
         data = await websocket.receive_text()
-        
         if not data.strip():  # Check if empty message received
             raise ValueError("Received empty message")
         request = json.loads(data)  # Convert JSON string to dict

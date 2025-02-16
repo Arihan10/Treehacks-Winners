@@ -20,11 +20,11 @@ class ADBHandler:
         """
         Dumps the current UI hierarchy to an XML file and retrieves its contents.
         """
-        dump_res = self.call(["shell", "uiautomator", "dump", "/sdcard/ui.xml"])
+        dump_res = self.call("adb shell uiautomator dump /sdcard/ui.xml")
         if not dump_res["succeeded"]:
             return dump_res
         
-        pull_res = self.call(["pull", "/sdcard/ui.xml", "ui.xml"])
+        pull_res = self.call("adb pull /sdcard/ui.xml ui.xml")
         if not pull_res["succeeded"]:
             return pull_res
         
@@ -45,12 +45,12 @@ class ADBHandler:
         device_screenshot_path = "/sdcard/screenshot.png"
 
         # Step 1: Capture screenshot on the device
-        screenshot_res = self.call(["shell", "screencap", "-p", device_screenshot_path])
+        screenshot_res = self.call(f'adb shell screencap -p {device_screenshot_path}')
         if not screenshot_res["succeeded"]:
             return {"output": "Failed to capture screenshot", "succeeded": False}
 
         # Step 2: Pull screenshot from device to host
-        pull_res = self.call(["pull", device_screenshot_path, local_screenshot_path])
+        pull_res = self.call(f'adb pull {device_screenshot_path} {local_screenshot_path}')
         if not pull_res["succeeded"]:
             return {"output": "Failed to pull screenshot", "succeeded": False}
 

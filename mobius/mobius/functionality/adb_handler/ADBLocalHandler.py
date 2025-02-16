@@ -26,5 +26,6 @@ class ADBLocalHandler(ADBHandler):
         result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
         success = result.returncode == 0
         time.sleep(2)
+
         
         return {"output": result.stdout.strip() if success else result.stderr.strip(), "succeeded": success}

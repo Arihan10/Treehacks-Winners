@@ -14,8 +14,9 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s -
 logger = logging.getLogger()
 
 async def execute(task: ActiveTask):
-    logging.info("HALHKFHSJDHSLKJFLSKJFD")
     logging.info(task.handler.call("adb shell wm size"))
+    logging.info(task.handler.get_xml())
+    logging.info(task.handler.get_screenshot())
 
     return True
     
