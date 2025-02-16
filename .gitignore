@@ -22,6 +22,8 @@ venv
 .venv
 docs.zip
 archive.zip
+*.egg-info/
+mobius-test/
 
 # vim temporary files
 *~
