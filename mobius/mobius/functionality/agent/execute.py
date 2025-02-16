@@ -58,7 +58,7 @@ adb shell service call statusbar 1"""
 
 # Initialize LLM
 llm = ChatOpenAI(
-    model_name="gpt-4o-mini",
+    model_name="gpt-4o",
     temperature=0.4
 )
 
@@ -127,9 +127,8 @@ Based on this task, determine the most relevant package and generate the appropr
     # Extract ADB command and execute it
 
     adb_command = response.content.strip()
+    print(adb_command)
     # run_adb_command(adb_command)
-    # print(adb_command)
-    # MULTIPLE???
     state['task'].handler.call(adb_command)
     
     state['init_response'] = response.content
@@ -150,7 +149,7 @@ Focus on user interface interactions and navigation."""
 
 A screenshot of the current screen state is attached to this message.
 
-Please provide a sequence of steps to complete this task."""},
+Please provide a sequence of steps to complete this task. At the end, provide a detailed overview of the given screenshot."""},
         {
             "type": "image_url",
             "image_url": {"url": f"data:image/png;base64,{encoded_image}"},
@@ -217,8 +216,6 @@ def questions_stage(state: Dict) -> Dict:
 
 You will repeatedly assess whether you are missing any information to concretely execute the command, and thus need to ask the user a question for further clarification. If such a question is necessary, output the question as a string - DO NOT output anything except the question itself, including NO formatting. If there is NO question to be asked, output the word "NONE" (WITHOUT the quotation marks)."""
 
-    
-
     xml_data = read_xml(state['task'].handler.get_xml())
     encoded_image = encode_image(state['task'].handler.get_screenshot())
     
@@ -246,12 +243,12 @@ Intended next action:
         SystemMessage(content=system_prompt),
         HumanMessage(content=user_message)
     ]
+
+    print("Thinking of a question... ")
     
     while True: 
-        
         response = llm.invoke(messages)
 
-        
         question = response.content.strip()
         
         if question == "NONE":
@@ -264,6 +261,7 @@ Intended next action:
         qa_pairs.append({"question": question, "answer": answer})
     
     state['qa_pairs'] = qa_pairs
+    print("\nQuestion-Answer Pairs:", state.get("qa_pairs", "No questions were asked"))
     return state
 
 def post_action_stage(state: Dict) -> Dict:
@@ -308,6 +306,7 @@ Current screen XML:
     
     response = llm.invoke(messages)
     state['post_action'] = response.content.strip()
+    print("\nPost-Questions Action:", state["post_action"])
     return state
 
 def command_generation_stage(state: Dict) -> Dict:
@@ -351,7 +350,6 @@ Action to execute:
         SystemMessage(content=system_prompt),
         HumanMessage(content=user_message)
     ]
-    
     
     response = llm.invoke(messages)
     
@@ -494,13 +492,12 @@ def run_agent(user_task : str, task: ActiveTask):
     return final_state
 
 async def execute(task: ActiveTask):
-
     # SAMPLE INVOCATIONS
     # logging.info(task.handler.call("adb shell wm size"))
     # logging.info(task.handler.get_xml())
     # logging.info(task.handler.get_screenshot())
     result = run_agent(user_task = task.natural_language_task, task = task)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     print("\nQuestion-Answer Pairs:", result.get("qa_pairs", "No questions were asked"))
     print("\nPost-Questions Action:", result["post_action"])
     print("\nFinal Status:", result["verification_result"])
