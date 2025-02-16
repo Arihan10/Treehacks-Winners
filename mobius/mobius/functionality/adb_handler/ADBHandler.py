@@ -13,7 +13,7 @@ class ADBHandler:
         """Checks if the device is connected by echoing 'ping'."""
         return self.call(["shell", "echo", "ping"])
     
-    def ui_dump(self):
+    def get_xml(self):
         """
         Dumps the current UI hierarchy to an XML file and retrieves its contents.
         """
@@ -32,3 +32,5 @@ class ADBHandler:
             return {"output": xml_content, "succeeded": True}
         except Exception as e:
             return {"output": str(e), "succeeded": False}
+
+    
